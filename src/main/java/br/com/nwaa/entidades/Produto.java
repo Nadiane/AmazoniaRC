@@ -2,6 +2,7 @@ package br.com.nwaa.entidades;
 
 public class Produto {
 
+    private String nome;
     private String descricao;
     private double valor;
     private int quantidade;
@@ -13,7 +14,8 @@ public class Produto {
     public Produto() {
     }
 
-    public Produto(String descricao, double valor, int quantidade, double peso, boolean midiaDigital, boolean emPromocao, boolean isentoImposto) {
+    public Produto(String nome, String descricao, double valor, int quantidade, double peso, boolean midiaDigital, boolean emPromocao, boolean isentoImposto) {
+        this.nome = nome;
         this.descricao = descricao;
         this.valor = valor;
         this.quantidade = quantidade;
@@ -29,6 +31,14 @@ public class Produto {
 
     public void setDescricao(String descricao) {
         this.descricao = descricao;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public String getNome() {
+        return nome;
     }
 
     public double getValor() {

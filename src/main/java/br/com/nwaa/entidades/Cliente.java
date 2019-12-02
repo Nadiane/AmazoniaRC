@@ -58,4 +58,5 @@ public class Cliente {
     public void setCupomDesconto(CupomDesconto cupomDesconto) {
         this.cupomDesconto = cupomDesconto;
     }
+
 }

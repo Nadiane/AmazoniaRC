@@ -4,6 +4,7 @@ import java.util.List;
 
 public class Compra {
 
+    private int codigo;
     private Cliente cliente;
     private List<Produto> produtos;
     private Frete frete;
@@ -14,13 +15,21 @@ public class Compra {
     public Compra() {
     }
 
-    public Compra(Cliente cliente, List<Produto> produtos, Frete frete, double valorTotal, double valorDesconto, boolean checkout) {
+    public Compra(int codigo, Cliente cliente, List<Produto> produtos, Frete frete, double valorTotal, double valorDesconto, boolean checkout) {
         this.cliente = cliente;
         this.produtos = produtos;
         this.frete = frete;
         this.valorTotal = valorTotal;
         this.valorDesconto = valorDesconto;
         this.checkout = checkout;
+    }
+
+    public void setCodigo(int codigo) {
+        this.codigo = codigo;
+    }
+
+    public int getCodigo() {
+        return codigo;
     }
 
     public Cliente getCliente() {
