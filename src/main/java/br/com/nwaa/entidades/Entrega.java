@@ -1,5 +1,8 @@
 package br.com.nwaa.entidades;
 
+import br.com.nwaa.constantes.Constantes;
+import br.com.nwaa.util.Util;
+
 public class Entrega {
 
     private String cepOrigem;
@@ -47,5 +50,10 @@ public class Entrega {
 
     public void setValor(double valor) {
         this.valor = valor;
+    }
+
+    @Override
+    public String toString() {
+        return "CEP Origem: " + Util.formatarValor(cepOrigem, Constantes.FORMATO_CEP) + "\nCEP Destino: " + Util.formatarValor(cepDestino, Constantes.FORMATO_CEP) + "\nPeso Total: " + peso;
     }
 }

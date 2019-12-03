@@ -108,4 +108,18 @@ public class Produto {
     public void setIsentoImposto(boolean isentoImposto) {
         this.isentoImposto = isentoImposto;
     }
+
+    @Override
+    public String toString() {
+        return "\nCódigo Produto: " + codigo +
+                "\nNome: " + nome +
+                "\nDescrição: " + descricao+
+                "\nValor Unitário: " + valorUnitario +
+                "\nValor Imposto: " + valorImposto +
+                "\nQuantidade: " + quantidade +
+                "\nPeso; " + peso +
+                "\nMídia Digital: " + midiaDigital +
+                "\nEm Promoção: " + isEmPromocao() +
+                "\nIsento de Imposto: " + isentoImposto;
+    }
 }

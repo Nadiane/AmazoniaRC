@@ -4,149 +4,98 @@ import br.com.nwaa.entidades.*;
 import br.com.nwaa.fachada.ComprasAmazoniaFachada;
 import br.com.nwaa.negocio.RealizaCalculoDesconto;
 import br.com.nwaa.negocio.RealizaCalculoFrete;
-import br.com.nwaa.negocio.RealizaCalculoImpostoImpl;
 import br.com.nwaa.util.Util;
-import sun.java2d.loops.GeneralRenderer;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class ApplicationMain {
 
     public static void main(String[] args) {
 
-        System.out.println("Compras Amazonia RC");
+        System.out.println("<----- Compras Amazonia RC ----->");
 
-        System.out.println("Carregando Cliente...");
+        System.out.println("\n<----- Carregando Cliente... ----->");
 
         Cliente cliente = ComprasAmazoniaFachada.getInstance().pesquisarCliente("01234567890");
 
-        System.out.println("CPF: " + cliente.getCpf() + "\nNome: " + cliente.getNome());
+        System.out.println(cliente.toString());
 
-        System.out.println("Endeço: " + cliente.getEndereco().getLogradouro() + ", " +
-                cliente.getEndereco().getNumero() + ", " +
-                cliente.getEndereco().getBairro() + " - " +
-                cliente.getEndereco().getCidade() + " - " +
-                cliente.getEndereco().getCep());
+        System.out.println("\n<----- Listando Produtos... ----->");
 
-        System.out.println("\nCarrinho de Compras");
+        List<Produto> produtos = ComprasAmazoniaFachada.getInstance().listarProdutos();
 
-        System.out.println("Adicionando Itens Ao Carrinho");
-
-        List<Produto> produtos = new ArrayList<Produto>();
-
-        Produto produto1 = new Produto(
-                "P0001",
-                "DVD - Game Of Thrones",
-                "A Oitava Temporada Completa - 4 Discos",
-                129.90,
-                0,
-                1,
-                0.100,
-                false,
-                false,
-                false
-        );
-
-        Produto produto2 = new Produto(
-                "P0002",
-                "Revista Oficial do PlayStation",
-                "Edição 179",
-                5.99,
-                0,
-                1,
-                0.100,
-                false,
-                true,
-                true
-        );
-
-        Produto produto3 = new Produto(
-                "P0003",
-                "Taylor Swift - Lover",
-                "CD Standard Edition",
-                47.90,
-                0,
-                1,
-                0.100,
-                false,
-                true,
-                false
-        );
-
-        Produto produto4 = new Produto(
-                "P0004",
-                "Heróis da Fé",
-                "EBook Kindle",
-                13.00,
-                0,
-                1,
-                0.100,
-                true,
-                true,
-                true
-        );
-
-        //Cálculo do Imposto Aqui
-        RealizaCalculoImpostoImpl calculoImposto = new RealizaCalculoImpostoImpl();
-        produto1.setValorImposto(Util.arredondar(calculoImposto.calcularImposto(produto1)));
-        produto2.setValorImposto(Util.arredondar(calculoImposto.calcularImposto(produto2)));
-        produto3.setValorImposto(Util.arredondar(calculoImposto.calcularImposto(produto3)));
-        produto4.setValorImposto(Util.arredondar(calculoImposto.calcularImposto(produto4)));
-
-        produtos.add(produto1);
-        produtos.add(produto2);
-        produtos.add(produto3);
-        produtos.add(produto4);
-
-        for (Produto pro:produtos) {
-            System.out.println("\nNome: " + pro.getNome() +
-                    "\nDescrição: " + pro.getDescricao() +
-                    "\nValor Unitário: " + pro.getValorUnitario() +
-                    "\nValor Imposto: " + pro.getValorImposto() +
-                    "\nQuantidade: " + pro.getQuantidade() +
-                    "\nPeso; " + pro.getPeso() +
-                    "\nMídia Digital: " +  pro.isMidiaDigital() +
-                    "\nEm Promoção: " + pro.isEmPromocao() +
-                    "\nIsento de Imposto: " + pro.isIsentoImposto());
+        for (Produto pro : produtos) {
+            System.out.println(pro);
         }
 
-        System.out.println("\nAdicionando Local de Entrega...");
+        System.out.println("\n<----- Adicionando Itens à Compra ----->");
+
+        ComprasAmazoniaFachada.getInstance().iniciarSelecaoProduto();
+
+        System.out.println("\n<----- Itens Selecionados: ----->");
+
+        Produto pro1 = ComprasAmazoniaFachada.getInstance().pesquisarProduto("P0001");
+        Produto pro2 = ComprasAmazoniaFachada.getInstance().pesquisarProduto("P0003");
+
+        ComprasAmazoniaFachada.getInstance().selecionarProduto(pro1);
+        ComprasAmazoniaFachada.getInstance().selecionarProduto(pro2);
+
+        List<Produto> produtosSelecionados = ComprasAmazoniaFachada.getInstance().listarProdutosSelecionados();
+
+        //Calculando Imposto
+        double totalImposto = Util.arredondar(ComprasAmazoniaFachada.getInstance().realizarCalculoImposto(produtosSelecionados));
+
+        for (Produto pro:produtosSelecionados) {
+            System.out.println(pro);
+        }
+
+        System.out.println("\n<----- Comprar ----->");
+
+        ComprasAmazoniaFachada.getInstance().iniciarCompra();
+        ComprasAmazoniaFachada.getInstance().adicionarProdutosCompra(produtosSelecionados);
+
+
+        System.out.println("\n<----- Adicionando Local de Entrega... ----->");
         Entrega entrega = new Entrega();
         entrega.setCepOrigem("51021520");
         entrega.setCepDestino("54280175");
 
-        for (Produto pro:produtos) {
+        for (Produto pro : produtosSelecionados) {
             entrega.setPeso(entrega.getPeso() + pro.getPeso());
         }
 
-        System.out.println("CEP Origem: " + entrega.getCepOrigem() + "\nCEP Destino: " + entrega.getCepDestino() + "\nPeso Total: " + entrega.getPeso());
+        System.out.println(entrega);
 
-        System.out.println("\nProcessando a Compra...");
+        System.out.println("\n<----- Processando a Compra... ----->");
 
         Compra compra = new Compra();
         compra.setCliente(cliente);
         compra.setProdutos(produtos);
 
+        //Cálculo do Imposto Aqui
+        compra.setValorImposto(totalImposto);
+        System.out.println("Valor Imposto: " + compra.getValorImposto());
+
+        //Calcular SubTotal
+        compra.setSubTotal(ComprasAmazoniaFachada.getInstance().calcularSubtotal(produtos));
+        System.out.println("SubTotal: " + compra.getSubTotal());
+
         //Calcular Desconto da Compra
-        RealizaCalculoDesconto calculoDesconto = new RealizaCalculoDesconto();
-        compra.setValorDesconto(calculoDesconto.calcular(cliente, produtos));
-        System.out.println("\nValor de Desconto: " + compra.getValorDesconto());
+        compra.setValorDesconto(ComprasAmazoniaFachada.getInstance().realizarCalculoDesconto(cliente, produtos));
+        System.out.println("Valor de Desconto: " + compra.getValorDesconto());
 
         //Calcular Frete
-        RealizaCalculoFrete realizaCalculoFrete = new RealizaCalculoFrete();
-        compra.setFrete(realizaCalculoFrete.calcular(entrega, produtos));
+        compra.setFrete(ComprasAmazoniaFachada.getInstance().realizarCalculoFrete(entrega, produtosSelecionados));
         System.out.println("Valor do Frete: " + compra.getFrete().getValor());
 
         //Finalizar Compra
-        for (Produto pro:produtos) {
-            compra.setValorTotal(compra.getValorTotal() + pro.getValorUnitario());
-        }
+        compra.setValorTotal(ComprasAmazoniaFachada.getInstance().calcularValorTotal(compra));
+
         System.out.println("Valor Total da Compra: " + compra.getValorTotal());
 
         compra.setCheckout(true);
 
-        System.out.println("Compra Finalizada com Sucesso!");
+        System.out.println("\n<----- Compra Finalizada com Sucesso! ----->");
 
         //Email de Confirmação de Compra
 

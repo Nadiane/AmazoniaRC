@@ -7,15 +7,20 @@ import br.com.nwaa.servico.frete.CalculoFreteService;
 
 import java.util.List;
 
-public class RealizaCalculoFrete {
+public class RealizaCalculoFrete implements IRealizaCalculo{
 
-    CalculoFreteService calculoFreteService;
+    private Entrega entrega;
+    private List<Produto> produtos;
+    private CalculoFreteService calculoFreteService;
 
-    public RealizaCalculoFrete() {
+    public RealizaCalculoFrete(Entrega pEntrega,List<Produto> pProdutos) {
+        this.entrega = pEntrega;
+        this.produtos = pProdutos;
         this.calculoFreteService = new CalculoFreteService();
     }
 
-    public Frete calcular(Entrega entrega, List<Produto> produtos){
+    @Override
+    public double calcular() {
         Frete frete = new Frete();
         for (Produto produto:produtos) {
             if(!produto.isMidiaDigital()){
@@ -24,7 +29,6 @@ public class RealizaCalculoFrete {
                 frete = calculoFreteService.calcularFrete(entrega);
             }
         }
-        return frete;
+        return frete.getValor();
     }
-
 }

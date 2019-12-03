@@ -1,15 +1,13 @@
 package br.com.nwaa.util;
 
+import br.com.nwaa.constantes.Constantes;
+import sun.rmi.runtime.Log;
+
+import javax.swing.text.MaskFormatter;
+import java.text.ParseException;
+
 public class Util {
 
-
-    /**
-     * 1 - Valor a arredondar.
-     * 2 - Quantidade de casas depois da vírgula.
-     * 3 - Arredondar para cima ou para baixo?
-     * Para cima = 0 (ceil)
-     * Para baixo = 1 ou qualquer outro inteiro (floor)
-     **/
     public static double arredondar(double valor) {
         double arredondado = valor;
         arredondado *= (Math.pow(10, 2));
@@ -21,6 +19,17 @@ public class Util {
     public static double converterStringEmDouble(String valorString){
         valorString = valorString.replace(',', '.');
         return Double.parseDouble(valorString);
+    }
+
+    public static String formatarValor(String valor, String formato){
+        try {
+            MaskFormatter mask = new MaskFormatter(formato);
+            mask.setValueContainsLiteralCharacters(false);
+            valor = mask.valueToString(valor);
+        } catch (ParseException ex) {
+            Log.getLog(ex.getMessage(), "", 0);
+        }
+        return valor;
     }
 
 }

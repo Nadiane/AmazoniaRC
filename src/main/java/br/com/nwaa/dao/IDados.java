@@ -8,10 +8,14 @@ import java.util.List;
 
 public interface IDados {
 
-    public Cliente pesquisarCliente(String cpf);
-    public List<Produto> listarProdutos();
-    public Produto pesquisarProduto(String codigo);
-    public void adicionarProdutoCompra(Produto produto);
-    public void inserirCompra(Compra compra);
-    public Compra iniciarCompra();
+   Cliente pesquisarCliente(String cpf);
+   List<Produto> listarProdutos();
+   Produto pesquisarProduto(String codigo);
+   Compra iniciarCompra();
+   void adicionarProdutosCompra(List<Produto> produtos);
+   void inserirCompra(Compra compra);
+   void selecionarProduto(Produto produto);
+   void iniciarSelecaoProduto();
+   List<Produto> listarProdutosSelecionados();
+
 }

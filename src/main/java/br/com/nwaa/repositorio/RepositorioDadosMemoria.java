@@ -11,6 +11,7 @@ public class RepositorioDadosMemoria {
 
     private List<Cliente> clientes;
     private List<Produto> produtos;
+    private List<Produto> produtosSelecionados;
     private Compra compra;
 
     public RepositorioDadosMemoria() {
@@ -32,6 +33,14 @@ public class RepositorioDadosMemoria {
 
     public void setProdutos(List<Produto> produtos) {
         this.produtos = produtos;
+    }
+
+    public void setProdutosSelecionados(List<Produto> produtosSelecionados) {
+        this.produtosSelecionados = produtosSelecionados;
+    }
+
+    public List<Produto> getProdutosSelecionados() {
+        return produtosSelecionados;
     }
 
     public Compra getCompra() {
@@ -152,4 +161,26 @@ public class RepositorioDadosMemoria {
         produtos.add(produto3);
         produtos.add(produto4);
     }
+
+    public Compra iniciarCompra() {
+        return compra = new Compra();
+    }
+
+    public void adicionarProdutoCompra(Produto produto){
+        compra.setProdutos(new ArrayList<>());
+        compra.getProdutos().add(produto);
+    }
+
+    public void selecionarProduto(Produto produto){
+        produtosSelecionados.add(produto);
+    }
+
+    public void iniciarSelecaoProduto(){
+        produtosSelecionados = new ArrayList<>();
+    }
+
+    public List<Produto> listarProdutosSelecionados(){
+        return produtosSelecionados;
+    }
+
 }

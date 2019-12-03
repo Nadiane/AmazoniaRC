@@ -1,5 +1,8 @@
 package br.com.nwaa.entidades;
 
+import br.com.nwaa.constantes.Constantes;
+import br.com.nwaa.util.Util;
+
 public class Cliente {
 
     private String cpf;
@@ -51,12 +54,20 @@ public class Cliente {
         this.email = email;
     }
 
-    public CupomDesconto getCupomDesconto() {
-        return cupomDesconto;
-    }
+    public CupomDesconto getCupomDesconto() { return cupomDesconto; }
 
     public void setCupomDesconto(CupomDesconto cupomDesconto) {
         this.cupomDesconto = cupomDesconto;
     }
 
+    @Override
+    public String toString() {
+        return "CPF: " + Util.formatarValor(cpf, Constantes.FORMATO_CPF)
+                + "\nNome: " + nome
+                + "\nEndeço: " + endereco.getLogradouro() + ", " +
+                endereco.getNumero() + ", " +
+                endereco.getBairro() + " - " +
+                endereco.getCidade() + " - " +
+                Util.formatarValor(endereco.getCep(), Constantes.FORMATO_CEP);
+    }
 }
