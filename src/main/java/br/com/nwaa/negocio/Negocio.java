@@ -67,4 +67,10 @@ public class Negocio {
         return Util.arredondar(((compra.getSubTotal() + compra.getValorImposto()) - compra.getValorDesconto()) + compra.getFrete().getValor());
     }
 
+    public String obterMensagemConfirmacaoCompra(Compra compra){
+        return "Compra Realizada com Sucesso!" +
+                "Olá, " + compra.getCliente().getNome() + "!"
+                + "\nSua Compra está confirmada!";
+    }
+
 }

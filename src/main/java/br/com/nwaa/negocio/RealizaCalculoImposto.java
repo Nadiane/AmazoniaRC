@@ -20,7 +20,8 @@ public class RealizaCalculoImposto implements IRealizaCalculo {
         double valorImposto = 0L;
         for (Produto pro:produtos) {
             if(!pro.isIsentoImposto()){
-                valorImposto = valorImposto + ((pro.getValorUnitario() * ICMS) - pro.getValorUnitario());
+                pro.setValorImposto(Util.arredondar((pro.getValorUnitario() * ICMS) - pro.getValorUnitario()));
+                valorImposto = valorImposto + (pro.getValorImposto());
             }
         }
         return Util.arredondar(valorImposto);

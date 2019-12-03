@@ -1,5 +1,6 @@
 package br.com.nwaa.fachada;
 
+import br.com.nwaa.excecao.CompraNaoFinalizada;
 import br.com.nwaa.dao.DadosDao;
 import br.com.nwaa.dao.IDados;
 import br.com.nwaa.entidades.*;
@@ -7,21 +8,25 @@ import br.com.nwaa.negocio.Negocio;
 import br.com.nwaa.negocio.RealizaCalculoDesconto;
 import br.com.nwaa.negocio.RealizaCalculoFrete;
 import br.com.nwaa.negocio.RealizaCalculoImposto;
+import br.com.nwaa.servico.email.EmailService;
 
 import java.util.List;
 
 public class ComprasAmazoniaFachada {
 
     private static ComprasAmazoniaFachada fachada;
+
     private Negocio negocio;
+    private EmailService emailService;
 
     private RealizaCalculoImposto realizaCalculoImposto = null;
     private RealizaCalculoDesconto realizaCalculoDesconto = null;
     private RealizaCalculoFrete realizaCalculoFrete = null;
 
-    public ComprasAmazoniaFachada() {
+    private ComprasAmazoniaFachada() {
         IDados idados = new DadosDao();
         negocio = new Negocio(idados);
+        emailService = new EmailService();
     }
 
     public static ComprasAmazoniaFachada getInstance(){
@@ -86,5 +91,15 @@ public class ComprasAmazoniaFachada {
 
     public double calcularValorTotal(Compra compra){
         return negocio.calcularValorTotal(compra);
+    }
+
+    public boolean enviarEmailConfirmacaoCompra(Compra compra) throws CompraNaoFinalizada {
+        if (compra.isCheckout()){
+            compra.getCliente().getEmail().setMensagem(negocio.obterMensagemConfirmacaoCompra(compra));
+            emailService.enviarEmail(compra.getCliente().getEmail());
+        }else{
+            throw new CompraNaoFinalizada();
+        }
+        return true;
     }
 }

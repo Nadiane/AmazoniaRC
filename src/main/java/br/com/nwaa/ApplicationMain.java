@@ -1,9 +1,10 @@
 package br.com.nwaa;
 
-import br.com.nwaa.entidades.*;
+import br.com.nwaa.entidades.Cliente;
+import br.com.nwaa.entidades.Compra;
+import br.com.nwaa.entidades.Entrega;
+import br.com.nwaa.entidades.Produto;
 import br.com.nwaa.fachada.ComprasAmazoniaFachada;
-import br.com.nwaa.negocio.RealizaCalculoDesconto;
-import br.com.nwaa.negocio.RealizaCalculoFrete;
 import br.com.nwaa.util.Util;
 
 import java.util.List;
@@ -72,13 +73,13 @@ public class ApplicationMain {
         compra.setCliente(cliente);
         compra.setProdutos(produtos);
 
-        //Cálculo do Imposto Aqui
-        compra.setValorImposto(totalImposto);
-        System.out.println("Valor Imposto: " + compra.getValorImposto());
-
         //Calcular SubTotal
         compra.setSubTotal(ComprasAmazoniaFachada.getInstance().calcularSubtotal(produtos));
         System.out.println("SubTotal: " + compra.getSubTotal());
+
+        //Cálculo do Imposto Aqui
+        compra.setValorImposto(totalImposto);
+        System.out.println("Valor Imposto: " + compra.getValorImposto());
 
         //Calcular Desconto da Compra
         compra.setValorDesconto(ComprasAmazoniaFachada.getInstance().realizarCalculoDesconto(cliente, produtos));

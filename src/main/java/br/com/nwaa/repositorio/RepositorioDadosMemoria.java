@@ -14,7 +14,7 @@ public class RepositorioDadosMemoria {
     private List<Produto> produtosSelecionados;
     private Compra compra;
 
-    public RepositorioDadosMemoria() {
+    private RepositorioDadosMemoria() {
         carregarClientes();
         carregarProdutos();
     }

@@ -2,6 +2,7 @@ package br.com.nwaa.dao;
 
 import br.com.nwaa.entidades.Cliente;
 import br.com.nwaa.entidades.Compra;
+import br.com.nwaa.entidades.Email;
 import br.com.nwaa.entidades.Produto;
 import br.com.nwaa.repositorio.RepositorioDadosMemoria;
 
@@ -48,11 +49,6 @@ public class DadosDao implements IDados{
         for (Produto pro:produtos) {
             RepositorioDadosMemoria.getInstance().adicionarProdutoCompra(pro);
         }
-    }
-
-    @Override
-    public void inserirCompra(Compra compra) {
-
     }
 
     @Override
