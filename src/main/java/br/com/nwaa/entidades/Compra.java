@@ -8,6 +8,7 @@ public class Compra {
     private Cliente cliente;
     private List<Produto> produtos;
     private Frete frete;
+    private Entrega entrega;
     private double valorTotal;
     private double valorDesconto;
     private boolean checkout;
@@ -15,10 +16,11 @@ public class Compra {
     public Compra() {
     }
 
-    public Compra(int codigo, Cliente cliente, List<Produto> produtos, Frete frete, double valorTotal, double valorDesconto, boolean checkout) {
+    public Compra(int codigo, Cliente cliente, List<Produto> produtos, Frete frete, Entrega entrega, double valorTotal, double valorDesconto, boolean checkout) {
         this.cliente = cliente;
         this.produtos = produtos;
         this.frete = frete;
+        this.entrega = entrega;
         this.valorTotal = valorTotal;
         this.valorDesconto = valorDesconto;
         this.checkout = checkout;
@@ -52,9 +54,11 @@ public class Compra {
         return frete;
     }
 
-    public void setFrete(Frete frete) {
-        this.frete = frete;
-    }
+    public void setFrete(Frete frete) { this.frete = frete; }
+
+    public void setEntrega(Entrega entrega) { this.entrega = entrega; }
+
+    public Entrega getEntrega() { return entrega; }
 
     public double getValorTotal() {
         return valorTotal;

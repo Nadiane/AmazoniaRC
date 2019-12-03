@@ -2,9 +2,11 @@ package br.com.nwaa.entidades;
 
 public class Produto {
 
+    private String codigo;
     private String nome;
     private String descricao;
-    private double valor;
+    private double valorUnitario;
+    private double valorImposto;
     private int quantidade;
     private double peso;
     private boolean midiaDigital;
@@ -14,15 +16,33 @@ public class Produto {
     public Produto() {
     }
 
-    public Produto(String nome, String descricao, double valor, int quantidade, double peso, boolean midiaDigital, boolean emPromocao, boolean isentoImposto) {
+    public Produto(String codigo, String nome, String descricao, double valorUnitario, double valorImposto, int quantidade, double peso, boolean midiaDigital, boolean emPromocao, boolean isentoImposto) {
+        this.codigo = codigo;
         this.nome = nome;
         this.descricao = descricao;
-        this.valor = valor;
+        this.valorUnitario = valorUnitario;
+        this.valorImposto = valorImposto;
         this.quantidade = quantidade;
         this.peso = peso;
         this.midiaDigital = midiaDigital;
         this.emPromocao = emPromocao;
         this.isentoImposto = isentoImposto;
+    }
+
+    public String getCodigo() {
+        return codigo;
+    }
+
+    public void setCodigo(String codigo) {
+        this.codigo = codigo;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
     }
 
     public String getDescricao() {
@@ -33,20 +53,20 @@ public class Produto {
         this.descricao = descricao;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
+    public double getValorUnitario() {
+        return valorUnitario;
     }
 
-    public String getNome() {
-        return nome;
+    public void setValorUnitario(double valorUnitario) {
+        this.valorUnitario = valorUnitario;
     }
 
-    public double getValor() {
-        return valor;
+    public double getValorImposto() {
+        return valorImposto;
     }
 
-    public void setValor(double valor) {
-        this.valor = valor;
+    public void setValorImposto(double valorImposto) {
+        this.valorImposto = valorImposto;
     }
 
     public int getQuantidade() {
