@@ -19,10 +19,6 @@ public class ComprasAmazoniaFachada {
     private Negocio negocio;
     private EnviarEmail enviarEmail;
 
-    private RealizaCalculoImposto realizaCalculoImposto = null;
-    private RealizaCalculoDesconto realizaCalculoDesconto = null;
-    private RealizaCalculoFrete realizaCalculoFrete = null;
-
     private ComprasAmazoniaFachada() {
         IDados idados = new DadosDao();
         negocio = new Negocio(idados);
@@ -47,9 +43,7 @@ public class ComprasAmazoniaFachada {
         return negocio.pesquisarProduto(codigo);
     }
 
-    public Compra iniciarCompra(){
-        return negocio.iniciarCompra();
-    }
+    public Compra iniciarCompra(){ return negocio.iniciarCompra(); }
 
     public void adicionarProdutosCompra(List<Produto> produtos){
         negocio.adicionarProdutosCompra(produtos);
@@ -68,20 +62,15 @@ public class ComprasAmazoniaFachada {
     }
 
     public Frete realizarCalculoFrete(Entrega entrega, List<Produto> produtos){
-        realizaCalculoFrete = new RealizaCalculoFrete(entrega, produtos);
-        Frete frete = new Frete();
-        frete.setValor(realizaCalculoFrete.calcular());
-        return frete;
+        return negocio.realizarCalculoFrete(entrega, produtos);
     }
 
     public double realizarCalculoDesconto(Cliente cliente, List<Produto> produtos){
-        realizaCalculoDesconto = new RealizaCalculoDesconto(cliente, produtos);
-        return realizaCalculoDesconto.calcular();
+        return negocio.realizarCalculoDesconto(cliente, produtos);
     }
 
     public double realizarCalculoImposto(List<Produto> produtos){
-        realizaCalculoImposto = new RealizaCalculoImposto(produtos);
-        return realizaCalculoImposto.calcular();
+       return negocio.realizarCalculoImposto(produtos);
     }
 
     public double calcularSubtotal(List<Produto> produtos){
@@ -93,12 +82,6 @@ public class ComprasAmazoniaFachada {
     }
 
     public String enviarEmailConfirmacaoCompra(Compra compra) throws CompraNaoFinalizada {
-        if (compra.isCheckout()){
-            compra.getCliente().getEmail().setAssunto("Confirmação de Compra");
-            compra.getCliente().getEmail().setMensagem(negocio.obterMensagemConfirmacaoCompra(compra));
-        }else{
-            throw new CompraNaoFinalizada();
-        }
-        return compra.getCliente().getEmail().getMensagem();
+       return negocio.enviarEmailConfirmacaoCompra(compra);
     }
 }
