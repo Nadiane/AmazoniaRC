@@ -70,9 +70,10 @@ public class RepositorioDadosMemoria {
                         "54280175"
                 ),
                 new Email(
-                        "email@amazoniaRD.com.br",
-                        "sebastiana@hotmail.com",
-                        "Bem Vindo!"
+                        "",
+                        "nad.gat@gmail.com",
+                        "",
+                        ""
                 ),
                 new CupomDesconto(
                         "10DESC",
@@ -91,13 +92,14 @@ public class RepositorioDadosMemoria {
                         "54280690"
                 ),
                 new Email(
+                        "",
                         "email@amazoniaRD.com.br",
-                        "roberto@hotmail.com",
-                        "Bem Vindo!"
+                        "",
+                        ""
                 ),
                 null
         );
-        clientes = new ArrayList<>();
+        clientes = new ArrayList<Cliente>();
         clientes.add(cliente1);
         clientes.add(cliente2);
     }
@@ -155,7 +157,7 @@ public class RepositorioDadosMemoria {
                 true
         );
 
-        produtos = new ArrayList<>();
+        produtos = new ArrayList<Produto>();
         produtos.add(produto1);
         produtos.add(produto2);
         produtos.add(produto3);
@@ -167,7 +169,7 @@ public class RepositorioDadosMemoria {
     }
 
     public void adicionarProdutoCompra(Produto produto){
-        compra.setProdutos(new ArrayList<>());
+        compra.setProdutos(new ArrayList<Produto>());
         compra.getProdutos().add(produto);
     }
 
@@ -176,7 +178,7 @@ public class RepositorioDadosMemoria {
     }
 
     public void iniciarSelecaoProduto(){
-        produtosSelecionados = new ArrayList<>();
+        produtosSelecionados = new ArrayList<Produto>();
     }
 
     public List<Produto> listarProdutosSelecionados(){

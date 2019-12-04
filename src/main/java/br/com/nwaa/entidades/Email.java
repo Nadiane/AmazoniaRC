@@ -4,14 +4,16 @@ public class Email {
 
     private String de;
     private String para;
+    private String assunto;
     private String mensagem;
 
     public Email() {
     }
 
-    public Email(String de, String para, String mensagem) {
+    public Email(String de, String para, String assunto, String mensagem) {
         this.de = de;
         this.para = para;
+        this.assunto = assunto;
         this.mensagem = mensagem;
     }
 
@@ -29,6 +31,14 @@ public class Email {
 
     public void setPara(String para) {
         this.para = para;
+    }
+
+    public String getAssunto() {
+        return assunto;
+    }
+
+    public void setAssunto(String assunto) {
+        this.assunto = assunto;
     }
 
     public String getMensagem() {

@@ -8,7 +8,7 @@ import br.com.nwaa.negocio.Negocio;
 import br.com.nwaa.negocio.RealizaCalculoDesconto;
 import br.com.nwaa.negocio.RealizaCalculoFrete;
 import br.com.nwaa.negocio.RealizaCalculoImposto;
-import br.com.nwaa.servico.email.EmailService;
+import br.com.nwaa.servico.email.EnviarEmail;
 
 import java.util.List;
 
@@ -17,7 +17,7 @@ public class ComprasAmazoniaFachada {
     private static ComprasAmazoniaFachada fachada;
 
     private Negocio negocio;
-    private EmailService emailService;
+    private EnviarEmail enviarEmail;
 
     private RealizaCalculoImposto realizaCalculoImposto = null;
     private RealizaCalculoDesconto realizaCalculoDesconto = null;
@@ -26,7 +26,6 @@ public class ComprasAmazoniaFachada {
     private ComprasAmazoniaFachada() {
         IDados idados = new DadosDao();
         negocio = new Negocio(idados);
-        emailService = new EmailService();
     }
 
     public static ComprasAmazoniaFachada getInstance(){
@@ -93,13 +92,14 @@ public class ComprasAmazoniaFachada {
         return negocio.calcularValorTotal(compra);
     }
 
-    public boolean enviarEmailConfirmacaoCompra(Compra compra) throws CompraNaoFinalizada {
+    public String enviarEmailConfirmacaoCompra(Compra compra) throws CompraNaoFinalizada {
         if (compra.isCheckout()){
+            compra.getCliente().getEmail().setAssunto("Confirmação de Compra");
             compra.getCliente().getEmail().setMensagem(negocio.obterMensagemConfirmacaoCompra(compra));
-            emailService.enviarEmail(compra.getCliente().getEmail());
+//            enviarEmail.enviar(compra.getCliente().getEmail());
         }else{
             throw new CompraNaoFinalizada();
         }
-        return true;
+        return compra.getCliente().getEmail().getMensagem();
     }
 }

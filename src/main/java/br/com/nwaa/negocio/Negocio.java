@@ -69,7 +69,7 @@ public class Negocio {
 
     public String obterMensagemConfirmacaoCompra(Compra compra){
         return "Compra Realizada com Sucesso!" +
-                "Olá, " + compra.getCliente().getNome() + "!"
+                "\nOlá, " + compra.getCliente().getNome() + "!"
                 + "\nSua Compra está confirmada!";
     }
 
