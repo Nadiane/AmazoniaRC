@@ -6,47 +6,92 @@ import br.com.nwaa.fachada.ComprasAmazoniaFachada;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class ComprasAmazoniaTest {
 
     @Test
     public void pesquisarClienteTest() {
         Cliente cliente = ComprasAmazoniaFachada.getInstance().pesquisarCliente("01234567890");
-        Assert.assertTrue(cliente.getCpf().equals("01234567890"));
+        Assert.assertEquals("01234567890", cliente.getCpf());
     }
 
     @Test
     public void pesquisarClienteNaoExistenteTest() {
         Cliente cliente = ComprasAmazoniaFachada.getInstance().pesquisarCliente("32145609871");
-        Assert.assertTrue(cliente == null);
+        Assert.assertNull(cliente);
     }
 
     @Test
     public void pesquisarClienteSemPassarCpfTest() {
         Cliente cliente = ComprasAmazoniaFachada.getInstance().pesquisarCliente("");
-        Assert.assertTrue(cliente == null);
+        Assert.assertNull(cliente);
     }
 
     @Test
     public void pesquisarProdutoTest() {
         Produto produto = ComprasAmazoniaFachada.getInstance().pesquisarProduto("P0001");
-        Assert.assertTrue(produto.getCodigo().equals("P0001"));
+        Assert.assertEquals("P0001", produto.getCodigo());
     }
 
     @Test
     public void pesquisarProdutoSemPassarCodigoTest() {
         Produto produto = ComprasAmazoniaFachada.getInstance().pesquisarProduto("");
-        Assert.assertTrue(produto == null);
+        Assert.assertNull(produto);
     }
 
     @Test
     public void iniciarCompraTest() {
-        Assert.assertTrue(ComprasAmazoniaFachada.getInstance().iniciarCompra() != null);
+        Assert.assertNotNull(ComprasAmazoniaFachada.getInstance().iniciarCompra());
     }
 
     @Test
-    public void adicionarProdutosCompraTest() {
+    public void selecionarProdutoTest() {
+        List<Produto> produtos = ComprasAmazoniaFachada.getInstance().listarProdutos();
         Produto produto = new Produto();
+        if(!produtos.isEmpty()){
+            produto = produtos.get(0);
+        }
+        ComprasAmazoniaFachada.getInstance().iniciarSelecaoProduto();
+        ComprasAmazoniaFachada.getInstance().selecionarProduto(produto);
+        List<Produto> produtosSelecionados = ComprasAmazoniaFachada.getInstance().listarProdutosSelecionados();
+        if(!produtosSelecionados.isEmpty()){
+            for (Produto pro:produtosSelecionados)
+                if (produto.getCodigo().equals(pro.getCodigo())) {
+                    Assert.assertTrue(true);
+                    break;
+                }
+        }
+    }
 
-        Assert.assertTrue(ComprasAmazoniaFachada.getInstance().adicionarProdutosCompra(); != null);
+    @Test
+    public void calulcarImpostoIsentoTest() {
+        List<Produto> produtos = ComprasAmazoniaFachada.getInstance().listarProdutos();
+        List<Produto> produtosIsento = new ArrayList<>();
+        for (Produto pro:produtos) {
+            if (pro.isIsentoImposto()){
+                produtosIsento.add(pro);
+                break;
+            }
+        }
+        double valorImposto = ComprasAmazoniaFachada.getInstance().realizarCalculoImposto(produtosIsento);
+
+        Assert.assertEquals(0L, valorImposto, 0.0);
+    }
+
+    @Test
+    public void calulcarImpostoNaoIsentoTest() {
+        List<Produto> produtos = ComprasAmazoniaFachada.getInstance().listarProdutos();
+        List<Produto> produtosIsento = new ArrayList<>();
+        for (Produto pro:produtos) {
+            if (!pro.isIsentoImposto()){
+                produtosIsento.add(pro);
+                break;
+            }
+        }
+        double valorImposto = ComprasAmazoniaFachada.getInstance().realizarCalculoImposto(produtosIsento);
+
+        Assert.assertTrue(valorImposto > 0L);
     }
 }
