@@ -64,8 +64,8 @@ public class RepositorioDadosMemoria {
                 "Sebastiana Carvalho",
                 new Endereco(
                         "Rua Agostinho",
-                        101,
-                        "Dois Carneiros",
+                        300,
+                        "Sucupira",
                         "Jaboatão",
                         "54280175"
                 ),
@@ -99,7 +99,7 @@ public class RepositorioDadosMemoria {
                 ),
                 null
         );
-        clientes = new ArrayList<Cliente>();
+        clientes = new ArrayList<>();
         clientes.add(cliente1);
         clientes.add(cliente2);
     }
@@ -157,7 +157,7 @@ public class RepositorioDadosMemoria {
                 true
         );
 
-        produtos = new ArrayList<Produto>();
+        produtos = new ArrayList<>();
         produtos.add(produto1);
         produtos.add(produto2);
         produtos.add(produto3);
@@ -169,7 +169,7 @@ public class RepositorioDadosMemoria {
     }
 
     public void adicionarProdutoCompra(Produto produto){
-        compra.setProdutos(new ArrayList<Produto>());
+        compra.setProdutos(new ArrayList<>());
         compra.getProdutos().add(produto);
     }
 
@@ -178,7 +178,7 @@ public class RepositorioDadosMemoria {
     }
 
     public void iniciarSelecaoProduto(){
-        produtosSelecionados = new ArrayList<Produto>();
+        produtosSelecionados = new ArrayList<>();
     }
 
     public List<Produto> listarProdutosSelecionados(){

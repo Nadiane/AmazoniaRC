@@ -96,7 +96,6 @@ public class ComprasAmazoniaFachada {
         if (compra.isCheckout()){
             compra.getCliente().getEmail().setAssunto("Confirmação de Compra");
             compra.getCliente().getEmail().setMensagem(negocio.obterMensagemConfirmacaoCompra(compra));
-            enviarEmail.enviarEmail(compra.getCliente().getEmail());
         }else{
             throw new CompraNaoFinalizada();
         }

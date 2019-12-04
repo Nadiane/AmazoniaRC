@@ -4,6 +4,7 @@ import br.com.nwaa.entidades.Cliente;
 import br.com.nwaa.entidades.Compra;
 import br.com.nwaa.entidades.Entrega;
 import br.com.nwaa.entidades.Produto;
+import br.com.nwaa.excecao.CompraNaoFinalizada;
 import br.com.nwaa.fachada.ComprasAmazoniaFachada;
 import br.com.nwaa.util.Util;
 import sun.rmi.runtime.Log;
@@ -104,8 +105,9 @@ public class ApplicationMain {
         System.out.println("\n<----- Email Enviado com Sucesso! ----->");
         try {
             System.out.println(ComprasAmazoniaFachada.getInstance().enviarEmailConfirmacaoCompra(compra));
-        }catch (Exception e){
-           /* Log.getLog(e.getMessage(), "", true);*/
+        } catch (CompraNaoFinalizada compraNaoFinalizada) {
+            System.out.println("Compra não finalizada, email não enviado!");
+            compraNaoFinalizada.printStackTrace();
         }
 
     }

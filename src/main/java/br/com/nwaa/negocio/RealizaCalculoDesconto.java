@@ -19,9 +19,8 @@ public class RealizaCalculoDesconto implements IRealizaCalculo {
     public double calcular() {
         double desconto = 0L;
         for (Produto pro : produtos) {
-            if (pro.isEmPromocao()) {
+            if (pro.isEmPromocao() && cliente.getCupomDesconto() != null)
                 desconto = (pro.getValorUnitario() * cliente.getCupomDesconto().getDesconto()) / 100;
-            }
         }
         return desconto;
     }

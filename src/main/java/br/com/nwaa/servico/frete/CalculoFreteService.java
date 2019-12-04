@@ -17,13 +17,14 @@ import java.net.URL;
 public class CalculoFreteService {
 
     private static final String USER_AGENT = "Mozilla/5.0";
+    private static final String CEP_ORIGEM = "51021520";
 
     public Frete calcularFrete(Entrega entrega) {
-        String url = "http://ws.correios.com.br/calculador/CalcPrecoPrazo.aspx?sCepOrigem=" + entrega.getCepOrigem() + "&sCepDestino=" + entrega.getCepDestino()
+        String url = "http://ws.correios.com.br/calculador/CalcPrecoPrazo.aspx?sCepOrigem=" + CEP_ORIGEM + "&sCepDestino=" + entrega.getCepDestino()
                 + "&nVlPeso=" + entrega.getPeso() + "&nVlComprimento=30&nVlAltura=2&nVlLargura=15&nVlDiametro=0.0&nCdFormato=1&sCdMaoPropria=N&sCdAvisoRecebimento=N"
                 + "&nVlValorDeclarado=0,00&nCdServico=04510&nCdEmpresa=&sDsSenha=&StrRetorno=xml";
 
-        Servicos servicos = null;
+        Servicos servicos = new Servicos();
 
         try {
             String retornoXML = sendGet(url, "GET");
