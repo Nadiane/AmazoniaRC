@@ -29,7 +29,7 @@ public class EnviarEmail {
                 props,
                 new javax.mail.Authenticator() {
                     protected PasswordAuthentication getPasswordAuthentication() {
-                        return new PasswordAuthentication("amazoniacompra@gmail.com", "031219_compra");
+                        return new PasswordAuthentication("wagner.dawis@gmail.com", "uni07.2wn");
                     }
                 }
         );
@@ -40,7 +40,7 @@ public class EnviarEmail {
         try {
             Message message = new MimeMessage(session);
             //Remetente
-            message.setFrom(new InternetAddress("amazoniacompra@gmail.com"));
+            message.setFrom(new InternetAddress("wagner.dawis@gmail.com"));
 
             //Destinatários
             Address[] toUser = InternetAddress.parse(email.getPara());
